@@ -1,5 +1,6 @@
+import { CURRENCIES } from "../common/constants";
+
 export interface Account {
-    id: string;
-    currency: string;
-    value: number;
+  id: CURRENCIES;
+  value: number;
 }
