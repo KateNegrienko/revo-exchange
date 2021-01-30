@@ -33,8 +33,26 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "precommit-msg": "echo 'Pre-commit checks...' && exit 0",
+    "prettier-msg": "echo 'Running prettier...' && exit 0",
+    "pretest-msg": "echo 'Running unit tests...' && exit 0",
+    "pretty-quick": "pretty-quick --staged",
+    "pre-test": "cross-env CI=true npm test"
   },
+  "devDependencies": {
+    "cross-env": "^7.0.2",
+    "pre-commit": "^1.2.2",
+    "prettier": "^2.0.4",
+    "pretty-quick": "^2.0.1"
+  },
+  "pre-commit": [
+    "precommit-msg",
+    "pretest-msg",
+    "pre-test",
+    "prettier-msg",
+    "pretty-quick"
+  ],
   "eslintConfig": {
     "extends": [
       "react-app",
