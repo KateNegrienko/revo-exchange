@@ -1,4 +1,4 @@
-import { Account } from "../../data/Account";
+import { exchangeMapping } from "../../common/utils";
 import * as constants from "./account.constants";
 import Model from "./account.model";
 import { DataState, Actions } from "./account.types";
@@ -24,24 +24,9 @@ export default function account(
       });
 
     case constants.EXCHANGE_MONEY:
-      const accounts = state.accounts.map(({ id, value }: Account) => {
-        switch (id) {
-          case state.sourceAccount.id:
-            return {
-              id,
-              value: value - Number(state.sourcePrice),
-            };
-
-          case state.destinationAccount.id:
-            return {
-              id: id,
-              value: value + Number(state.destinationPrice),
-            };
-
-          default:
-            return { id, value };
-        }
-      });
+      const accounts = state.accounts.map((item) =>
+        exchangeMapping(item, state)
+      );
       return state.merge({
         accounts,
         destinationPrice: "",

@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { shallowEqual, useSelector } from "react-redux";
 import { CURRENCIES } from "../../common/constants";
@@ -18,13 +18,15 @@ import theme from "./Exchange.module.scss";
 
 const Exchange: FC = () => {
   const history = useHistory();
+  const [type, setType] = useState(ExchangeAccountType.SOURCE);
   const {
     accounts,
-    destinationAccount,
-    destinationPrice,
-    sourceAccount,
     sourcePrice,
+    sourceAccount,
+    destinationPrice,
+    destinationAccount,
   }: accountState = useSelector((state: any) => state.account, shallowEqual);
+
   const { rates }: currencyState = useSelector(
     (state: any) => state.currency,
     shallowEqual
@@ -32,10 +34,32 @@ const Exchange: FC = () => {
 
   useEffect(() => {
     readExchangeRate();
+    const timer = window.setInterval(() => {
+      //readExchangeRate();
+    }, 10000);
+    return () => {
+      // Return callback to run on unmount.
+      window.clearInterval(timer);
+    };
   }, []);
+
+  useEffect(() => {
+    if (sourcePrice && destinationPrice) {
+      setNewPrice(
+        rates,
+        type,
+        type === ExchangeAccountType.SOURCE
+          ? Number(sourcePrice)
+          : Number(destinationPrice),
+        sourceAccount,
+        destinationAccount
+      );
+    }
+  }, [rates]);
 
   const handleChangePrice = useCallback(
     (type: ExchangeAccountType, price: number | string) => {
+      setType(type);
       setNewPrice(
         rates,
         type,
@@ -48,42 +72,18 @@ const Exchange: FC = () => {
   );
 
   const handleChangeAccount = useCallback(
-    (type: ExchangeAccountType, accountId: CURRENCIES) => {
+    (accountType: ExchangeAccountType, accountId: CURRENCIES) => {
       const newAccount = accounts.find((item) => item.id === accountId);
       if (newAccount) {
-        switch (type) {
-          case ExchangeAccountType.SOURCE:
-            setNewAccount(constants.SET_SOURCE_ACCOUNT, newAccount);
-
-            setNewPrice(
-              rates,
-              type,
-              Number(sourcePrice),
-              newAccount,
-              destinationAccount
-            );
-            break;
-          case ExchangeAccountType.DESTINATION:
-            setNewAccount(constants.SET_DESTINATION_ACCOUNT, newAccount);
-            setNewPrice(
-              rates,
-              type,
-              Number(destinationPrice),
-              sourceAccount,
-              newAccount
-            );
-            break;
-        }
+        setNewAccount(
+          accountType === ExchangeAccountType.SOURCE
+            ? constants.SET_SOURCE_ACCOUNT
+            : constants.SET_DESTINATION_ACCOUNT,
+          newAccount
+        );
       }
     },
-    [
-      accounts,
-      destinationPrice,
-      sourcePrice,
-      destinationAccount,
-      sourceAccount,
-      rates,
-    ]
+    [accounts]
   );
 
   const handleExchange = useCallback(() => {

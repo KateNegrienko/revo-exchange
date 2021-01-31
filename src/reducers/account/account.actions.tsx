@@ -18,6 +18,7 @@ export const setNewPrice = (
 ) => {
   const sourcePrice = rates.find(({ id }) => id === source.id)?.price;
   const destinationPrice = rates.find(({ id }) => id === destination.id)?.price;
+  console.log(source.id, destination.id);
 
   if (sourcePrice && destinationPrice) {
     switch (type) {

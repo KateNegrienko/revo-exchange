@@ -16,11 +16,11 @@ export function* readExchangeSaga() {
       },
       {
         id: CURRENCIES.EUR,
-        price: 2,
+        price: 1 + Math.floor(Math.random() * Math.floor(3)),
       },
       {
         id: CURRENCIES.GBP,
-        price: 3,
+        price: 1 + Math.floor(Math.random() * Math.floor(3)),
       },
     ];
     yield put({
