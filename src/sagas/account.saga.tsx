@@ -20,9 +20,7 @@ export function* setSourceAccountSaga() {
   yield setNewPrice(
     currency.rates,
     ExchangeAccountType.SOURCE,
-    Number(account.sourcePrice),
-    account.sourceAccount,
-    account.destinationAccount
+    Number(account.sourcePrice)
   );
 }
 export function* setDestinationAccountSaga() {
@@ -34,8 +32,6 @@ export function* setDestinationAccountSaga() {
   yield setNewPrice(
     currency.rates,
     ExchangeAccountType.DESTINATION,
-    Number(account.destinationPrice),
-    account.sourceAccount,
-    account.destinationAccount
+    Number(account.destinationPrice)
   );
 }

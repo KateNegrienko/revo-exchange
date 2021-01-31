@@ -12,37 +12,16 @@ export const exchangeMoney = () =>
 export const setNewPrice = (
   rates: Rate[],
   type: ExchangeAccountType,
-  price: number,
-  source: Account,
-  destination: Account
+  price: number
 ) => {
-  const sourcePrice = rates.find(({ id }) => id === source.id)?.price;
-  const destinationPrice = rates.find(({ id }) => id === destination.id)?.price;
-  console.log(source.id, destination.id);
-
-  if (sourcePrice && destinationPrice) {
-    switch (type) {
-      case ExchangeAccountType.SOURCE:
-        const destination = (price * sourcePrice) / destinationPrice;
-        return store.dispatch({
-          type: constants.SET_NEW_PRICE,
-          payload: {
-            sourcePrice: price,
-            destinationPrice: parseFloat(destination.toString()).toFixed(2),
-          },
-        });
-
-      case ExchangeAccountType.DESTINATION:
-        const source = (price * destinationPrice) / sourcePrice;
-        return store.dispatch({
-          type: constants.SET_NEW_PRICE,
-          payload: {
-            sourcePrice: parseFloat(source.toString()).toFixed(2),
-            destinationPrice: price,
-          },
-        });
-    }
-  }
+  store.dispatch({
+    type: constants.SET_NEW_PRICE,
+    payload: {
+      type,
+      rates,
+      price,
+    },
+  });
 };
 
 export const setNewAccount = (type: string, account: Account) =>

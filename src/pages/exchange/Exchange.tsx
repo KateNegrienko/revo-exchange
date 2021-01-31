@@ -50,9 +50,7 @@ const Exchange: FC = () => {
         type,
         type === ExchangeAccountType.SOURCE
           ? Number(sourcePrice)
-          : Number(destinationPrice),
-        sourceAccount,
-        destinationAccount
+          : Number(destinationPrice)
       );
     }
   }, [rates]);
@@ -60,15 +58,9 @@ const Exchange: FC = () => {
   const handleChangePrice = useCallback(
     (type: ExchangeAccountType, price: number | string) => {
       setType(type);
-      setNewPrice(
-        rates,
-        type,
-        Number(price),
-        sourceAccount,
-        destinationAccount
-      );
+      setNewPrice(rates, type, Number(price));
     },
-    [destinationAccount, sourceAccount, rates]
+    [rates]
   );
 
   const handleChangeAccount = useCallback(
