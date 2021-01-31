@@ -18,7 +18,7 @@ const Account: FC = () => {
   return (
     <div className={theme.root}>
       {accounts.map((card) => (
-        <AccountCard card={card} />
+        <AccountCard card={card} key={card.id} />
       ))}
       <button onClick={handleEchangeClick}>Echange</button>
     </div>

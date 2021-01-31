@@ -1,4 +1,5 @@
 import { FC, useCallback, useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { shallowEqual, useSelector } from "react-redux";
 import { CURRENCIES } from "../../common/constants";
 import { accountState } from "../../reducers/account/account.types";
@@ -8,8 +9,11 @@ import ExchangeAccount from "./components/exchange-account/ExchangeAccount";
 import { ExchangeAccountType } from "./components/exchange-account/ExchangeAccount.interface";
 import { Account } from "../../data/Account";
 import theme from "./Exchange.module.scss";
+import { exchangeMoney } from "../../reducers/account/account.actions";
+import { ROOT } from "../../router/Root.constants";
 
 const Exchange: FC = () => {
+  const history = useHistory();
   const { accounts }: accountState = useSelector(
     (state: any) => state.account,
     shallowEqual
@@ -67,7 +71,7 @@ const Exchange: FC = () => {
     [destinationAccount, sourceAccount, setNewPrice]
   );
 
-  const onChangeAccount = useCallback(
+  const handleChangeAccount = useCallback(
     (type: ExchangeAccountType, accountId: CURRENCIES) => {
       const newAccount = accounts.find((item) => item.id === accountId);
       if (newAccount) {
@@ -103,12 +107,28 @@ const Exchange: FC = () => {
     ]
   );
 
+  const handleExchange = useCallback(() => {
+    exchangeMoney(
+      sourceAccount.id,
+      destinationAccount.id,
+      Number(sourcePrice),
+      Number(destinationPrice)
+    );
+    history.push(ROOT.ACCOUNT);
+  }, [
+    sourceAccount.id,
+    sourcePrice,
+    destinationPrice,
+    destinationAccount.id,
+    history,
+  ]);
+
   return (
     <div className={theme.root}>
       Exchange
       {sourceAccount && (
         <ExchangeAccount
-          onChangeAccount={onChangeAccount}
+          onChangeAccount={handleChangeAccount}
           account={sourceAccount}
           rates={rates}
           type={ExchangeAccountType.SOURCE}
@@ -118,14 +138,20 @@ const Exchange: FC = () => {
       )}
       {destinationAccount && (
         <ExchangeAccount
-          onChangeAccount={onChangeAccount}
           account={destinationAccount}
           rates={rates}
           type={ExchangeAccountType.DESTINATION}
           price={destinationPrice}
           onChangePrice={handleChangePrice}
+          onChangeAccount={handleChangeAccount}
         />
       )}
+      <button
+        onClick={handleExchange}
+        disabled={sourceAccount.id === destinationAccount.id}
+      >
+        Exchange
+      </button>
     </div>
   );
 };

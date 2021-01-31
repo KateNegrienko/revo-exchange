@@ -9,12 +9,23 @@ export default function account(
 ) {
   switch (type) {
     case constants.EXCHANGE_MONEY:
-      const updatedAccounts = state.accounts.map((item: Account) => {
-        if (item.id !== payload.currency) return item;
-        return {
-          id: item.id,
-          value: item.value - payload.money,
-        };
+      const updatedAccounts = state.accounts.map(({ id, value }: Account) => {
+        switch (id) {
+          case payload.sourceAccountId:
+            return {
+              id,
+              value: value - payload.sourcePrice,
+            };
+
+          case payload.destinationAccountId:
+            return {
+              id: id,
+              value: value + payload.destinationPrice,
+            };
+
+          default:
+            return { id, value };
+        }
       });
       return state.merge({
         accounts: updatedAccounts,
