@@ -1,4 +1,6 @@
 import { put, takeEvery } from "redux-saga/effects";
+import { CURRENCIES } from "../common/constants";
+import { Rate } from "../data/Rate";
 import * as constants from "../reducers/currency/currency.constants";
 
 export function* watcherDataSaga() {
@@ -7,11 +9,23 @@ export function* watcherDataSaga() {
 
 export function* readExchangeSaga() {
   try {
+    const rates: Rate[] = [
+      {
+        id: CURRENCIES.USD,
+        price: 1,
+      },
+      {
+        id: CURRENCIES.EUR,
+        price: 2,
+      },
+      {
+        id: CURRENCIES.GBP,
+        price: 3,
+      },
+    ];
     yield put({
       type: constants.READ_EXCHANGE_RATES_SUCCESS,
-      payload: {
-        currencys: [],
-      },
+      payload: rates,
     });
   } catch (error) {
     yield put({
