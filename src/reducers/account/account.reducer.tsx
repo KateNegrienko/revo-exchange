@@ -1,3 +1,4 @@
+import { Account } from "../../data/Account";
 import * as constants from "./account.constants";
 import Model from "./account.model";
 import { DataState, Actions } from "./account.types";
@@ -7,23 +8,16 @@ export default function account(
   { type, payload }: Actions
 ) {
   switch (type) {
-    case constants.ACCOUNTS:
-      return state.merge({
-        loading: true,
-        error: undefined,
+    case constants.EXCHANGE_MONEY:
+      const updatedAccounts = state.accounts.map((item: Account) => {
+        if (item.id !== payload.currency) return item;
+        return {
+          id: item.id,
+          value: item.value - payload.money,
+        };
       });
-
-    case constants.ACCOUNTS_ERROR:
       return state.merge({
-        loading: false,
-        error: payload.error,
-      });
-
-    case constants.ACCOUNTS_SUCCESS:
-      return state.merge({
-        loading: false,
-        error: undefined,
-        accounts: payload.accounts, // TODO
+        accounts: updatedAccounts,
       });
 
     default:

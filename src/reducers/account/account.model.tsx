@@ -18,7 +18,5 @@ export const INITIAL_ACCOUNTS: Account[] = [
 ];
 
 export default Immutable({
-  loading: false,
-  error: undefined,
   accounts: INITIAL_ACCOUNTS, // TODO in real app we have empty array here and get current situation from server using redux and saga
 });
