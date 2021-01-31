@@ -8,19 +8,34 @@ export default function account(
   { type, payload }: Actions
 ) {
   switch (type) {
+    case constants.SET_DESTINATION_ACCOUNT:
+      return state.merge({
+        destinationAccount: payload,
+      });
+    case constants.SET_SOURCE_ACCOUNT:
+      return state.merge({
+        sourceAccount: payload,
+      });
+
+    case constants.SET_NEW_PRICE:
+      return state.merge({
+        destinationPrice: payload.destinationPrice,
+        sourcePrice: payload.sourcePrice,
+      });
+
     case constants.EXCHANGE_MONEY:
-      const updatedAccounts = state.accounts.map(({ id, value }: Account) => {
+      const accounts = state.accounts.map(({ id, value }: Account) => {
         switch (id) {
-          case payload.sourceAccountId:
+          case state.sourceAccount.id:
             return {
               id,
-              value: value - payload.sourcePrice,
+              value: value - Number(state.sourcePrice),
             };
 
-          case payload.destinationAccountId:
+          case state.destinationAccount.id:
             return {
               id: id,
-              value: value + payload.destinationPrice,
+              value: value + Number(state.destinationPrice),
             };
 
           default:
@@ -28,7 +43,11 @@ export default function account(
         }
       });
       return state.merge({
-        accounts: updatedAccounts,
+        accounts,
+        destinationPrice: "",
+        sourcePrice: "",
+        sourceAccount: accounts[0],
+        destinationAccount: accounts[1],
       });
 
     default:

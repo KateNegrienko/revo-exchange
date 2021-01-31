@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, useCallback, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { shallowEqual, useSelector } from "react-redux";
 import { CURRENCIES } from "../../common/constants";
@@ -7,68 +7,44 @@ import { readExchangeRate } from "../../reducers/currency/currency.actions";
 import { currencyState } from "../../reducers/currency/currency.types";
 import ExchangeAccount from "./components/exchange-account/ExchangeAccount";
 import { ExchangeAccountType } from "./components/exchange-account/ExchangeAccount.interface";
-import { Account } from "../../data/Account";
-import theme from "./Exchange.module.scss";
-import { exchangeMoney } from "../../reducers/account/account.actions";
+import * as constants from "../../reducers/account/account.constants";
+import {
+  exchangeMoney,
+  setNewAccount,
+  setNewPrice,
+} from "../../reducers/account/account.actions";
 import { ROOT } from "../../router/Root.constants";
+import theme from "./Exchange.module.scss";
 
 const Exchange: FC = () => {
   const history = useHistory();
-  const { accounts }: accountState = useSelector(
-    (state: any) => state.account,
-    shallowEqual
-  );
+  const {
+    accounts,
+    destinationAccount,
+    destinationPrice,
+    sourceAccount,
+    sourcePrice,
+  }: accountState = useSelector((state: any) => state.account, shallowEqual);
   const { rates }: currencyState = useSelector(
     (state: any) => state.currency,
     shallowEqual
   );
 
-  const [sourceAccount, setSourceAccount] = useState(accounts[0]);
-  const [destinationAccount, setDestinationAccount] = useState(accounts[1]);
-
-  const [sourcePrice, setSourcePrice] = useState<number | string>("");
-  const [destinationPrice, setDestinationPrice] = useState<number | string>("");
-
   useEffect(() => {
     readExchangeRate();
   }, []);
 
-  const setNewPrice = useCallback(
-    (
-      type: ExchangeAccountType,
-      price: number,
-      source: Account,
-      destination: Account
-    ) => {
-      const sourcePrice = rates.find(({ id }) => id === source.id)?.price;
-      const destinationPrice = rates.find(({ id }) => id === destination.id)
-        ?.price;
-
-      if (sourcePrice && destinationPrice) {
-        switch (type) {
-          case ExchangeAccountType.SOURCE:
-            setSourcePrice(price);
-            const destination = (price * sourcePrice) / destinationPrice;
-            setDestinationPrice(parseFloat(destination.toString()).toFixed(2));
-
-            break;
-          case ExchangeAccountType.DESTINATION:
-            setDestinationPrice(price);
-            const source = (price * destinationPrice) / sourcePrice;
-            setSourcePrice(parseFloat(source.toString()).toFixed(2));
-
-            break;
-        }
-      }
-    },
-    [rates]
-  );
-
   const handleChangePrice = useCallback(
     (type: ExchangeAccountType, price: number | string) => {
-      setNewPrice(type, Number(price), sourceAccount, destinationAccount);
+      setNewPrice(
+        rates,
+        type,
+        Number(price),
+        sourceAccount,
+        destinationAccount
+      );
     },
-    [destinationAccount, sourceAccount, setNewPrice]
+    [destinationAccount, sourceAccount, rates]
   );
 
   const handleChangeAccount = useCallback(
@@ -77,8 +53,10 @@ const Exchange: FC = () => {
       if (newAccount) {
         switch (type) {
           case ExchangeAccountType.SOURCE:
-            setSourceAccount(newAccount);
+            setNewAccount(constants.SET_SOURCE_ACCOUNT, newAccount);
+
             setNewPrice(
+              rates,
               type,
               Number(sourcePrice),
               newAccount,
@@ -86,8 +64,9 @@ const Exchange: FC = () => {
             );
             break;
           case ExchangeAccountType.DESTINATION:
-            setDestinationAccount(newAccount);
+            setNewAccount(constants.SET_DESTINATION_ACCOUNT, newAccount);
             setNewPrice(
+              rates,
               type,
               Number(destinationPrice),
               sourceAccount,
@@ -103,45 +82,34 @@ const Exchange: FC = () => {
       sourcePrice,
       destinationAccount,
       sourceAccount,
-      setNewPrice,
+      rates,
     ]
   );
 
   const handleExchange = useCallback(() => {
-    exchangeMoney(
-      sourceAccount.id,
-      destinationAccount.id,
-      Number(sourcePrice),
-      Number(destinationPrice)
-    );
+    exchangeMoney();
     history.push(ROOT.ACCOUNT);
-  }, [
-    sourceAccount.id,
-    sourcePrice,
-    destinationPrice,
-    destinationAccount.id,
-    history,
-  ]);
+  }, [history]);
 
   return (
     <div className={theme.root}>
       Exchange
       {sourceAccount && (
         <ExchangeAccount
-          onChangeAccount={handleChangeAccount}
-          account={sourceAccount}
           rates={rates}
-          type={ExchangeAccountType.SOURCE}
           price={sourcePrice}
+          account={sourceAccount}
+          type={ExchangeAccountType.SOURCE}
           onChangePrice={handleChangePrice}
+          onChangeAccount={handleChangeAccount}
         />
       )}
       {destinationAccount && (
         <ExchangeAccount
-          account={destinationAccount}
           rates={rates}
-          type={ExchangeAccountType.DESTINATION}
           price={destinationPrice}
+          account={destinationAccount}
+          type={ExchangeAccountType.DESTINATION}
           onChangePrice={handleChangePrice}
           onChangeAccount={handleChangeAccount}
         />

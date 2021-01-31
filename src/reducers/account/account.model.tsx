@@ -18,5 +18,9 @@ export const INITIAL_ACCOUNTS: Account[] = [
 ];
 
 export default Immutable({
+  sourceAccount: INITIAL_ACCOUNTS[0],
+  destinationAccount: INITIAL_ACCOUNTS[1],
+  destinationPrice: "",
+  sourcePrice: "",
   accounts: INITIAL_ACCOUNTS, // TODO in real app we have empty array here and get current situation from server using redux and saga
 });
