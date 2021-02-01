@@ -7,6 +7,7 @@ import { ROOT } from "../../router/Root.constants";
 import theme from "./Account.module.scss";
 import AccountCard from "./components/account-card/AccountCard";
 import Card from "../../common/card/Card";
+import Button from "../../common/button/Button";
 
 const Account: FC = () => {
   const { accounts }: accountState = useSelector(
@@ -14,7 +15,7 @@ const Account: FC = () => {
     shallowEqual
   );
   const history = useHistory();
-  const handleEchangeClick = useCallback(() => {
+  const handleExchangeClick = useCallback(() => {
     history.push(ROOT.EXCHANGE);
   }, [history]);
   return (
@@ -24,7 +25,7 @@ const Account: FC = () => {
         {accounts.map((card) => (
           <AccountCard card={card} key={card.id} />
         ))}
-        <button onClick={handleEchangeClick}>Echange</button>
+        <Button onClick={handleExchangeClick}>Exchange</Button>
       </Card>
     </div>
   );

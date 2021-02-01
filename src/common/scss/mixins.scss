@@ -1,6 +1,20 @@
+@import "./constants.scss";
+
+@mixin mq($width, $type: min) {
+  @if map_has_key($breakpoints-screen, $width) {
+    $width: map_get($breakpoints-screen, $width);
+    @if $type == max {
+      $width: $width - 1px;
+    }
+    @media only screen and (#{$type}-width: $width) {
+      @content;
+    }
+  }
+}
+
 @mixin header() {
   color: $primary;
-  margin: 0 $space-m $space-l $space-m;
+  margin: 0 0 $space-l 0;
   font-weight: 500;
 }
 
@@ -8,7 +22,19 @@
   max-width: 400px;
   margin: $space-xxl auto;
   background-color: $ligth-neutral;
-  @media (max-width: 440px) {
+  @include mq(mobile, max) {
     margin: 0 auto;
+  }
+}
+
+@mixin set-breakpoint-fontsize($name) {
+  font-size: map_get($name, "mobile");
+  @include mq(tablet) {
+    @include mq(desktop, max) {
+      font-size: map_get($name, "tablet");
+    }
+  }
+  @include mq(desktop) {
+    font-size: map_get($name, "desktop");
   }
 }

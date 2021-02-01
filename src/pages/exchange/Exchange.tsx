@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { shallowEqual, useSelector } from "react-redux";
 import { CURRENCIES } from "../../common/constants";
@@ -17,6 +17,7 @@ import { ROOT } from "../../router/Root.constants";
 import theme from "./Exchange.module.scss";
 import { IState } from "../../reducers";
 import Card from "../../common/card/Card";
+import Button from "../../common/button/Button";
 
 const Exchange: FC = () => {
   const history = useHistory();
@@ -109,12 +110,12 @@ const Exchange: FC = () => {
             onChangeAccount={handleChangeAccount}
           />
         )}
-        <button
+        <Button
           onClick={handleExchange}
           disabled={sourceAccount.id === destinationAccount.id}
         >
           Exchange
-        </button>
+        </Button>
       </Card>
     </div>
   );

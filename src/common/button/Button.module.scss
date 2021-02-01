@@ -1,0 +1,31 @@
+@import "../scss/constants.scss";
+@import "../scss/mixins.scss";
+
+.button {
+  @include set-breakpoint-fontsize($font-button);
+  padding: $space-m $space-m * 2;
+  min-width: 150px;
+
+  border: none;
+  background-color: $primary;
+  color: $white;
+  border-radius: $border-radius-l;
+  margin-top: $space-l;
+  width: 100%;
+
+  &:hover {
+    border-color: inherit;
+    background-color: $primary-hover;
+    color: $white;
+  }
+  &:active {
+    border-color: inherit;
+    background-color: $primary-pressed;
+    color: $white;
+  }
+  &.disabled {
+    border-color: inherit;
+    background-color: $primary-disabled;
+    color: $neutral;
+  }
+}

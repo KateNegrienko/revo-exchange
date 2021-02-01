@@ -2,9 +2,8 @@
 @import "../../common/scss/mixins.scss";
 
 .root {
-  padding: $space-m;
+  padding: $space-m 0;
   .card {
-    max-width: 400px;
     @include card-layout();
   }
   .header {
