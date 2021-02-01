@@ -1,6 +1,6 @@
 import { put, takeEvery } from "redux-saga/effects";
 import { CURRENCIES } from "../common/constants";
-import { Rate } from "../data/Rate";
+import { IRate } from "../data/Rate";
 import * as constants from "../reducers/currency/currency.constants";
 
 export function* watcherDataSaga() {
@@ -9,18 +9,18 @@ export function* watcherDataSaga() {
 
 export function* readExchangeSaga() {
   try {
-    const rates: Rate[] = [
+    const rates: IRate[] = [
       {
         id: CURRENCIES.USD,
         price: 1,
       },
       {
         id: CURRENCIES.EUR,
-        price: 1 + Math.floor(Math.random() * Math.floor(3)),
+        price: 2, //1 + Math.floor(Math.random() * Math.floor(3)),
       },
       {
         id: CURRENCIES.GBP,
-        price: 1 + Math.floor(Math.random() * Math.floor(3)),
+        price: 3, //1 + Math.floor(Math.random() * Math.floor(3)),
       },
     ];
     yield put({

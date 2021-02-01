@@ -1,8 +1,8 @@
 import { Immutable } from "seamless-immutable";
-import { Rate } from "../../data/Rate";
+import { IRate } from "../../data/Rate";
 
 export interface currencyState {
-  rates: Rate[];
+  rates: IRate[];
   loading: boolean;
   error?: any;
 }

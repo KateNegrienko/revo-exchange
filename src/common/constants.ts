@@ -3,3 +3,8 @@ export enum CURRENCIES {
   EUR = "EUR",
   GBP = "GBR",
 }
+
+export const DEFAULT_PRICES = {
+  destinationPrice: "",
+  sourcePrice: "",
+};

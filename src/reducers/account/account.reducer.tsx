@@ -1,3 +1,4 @@
+import { DEFAULT_PRICES } from "../../common/constants";
 import { exchangeMapping, setNewPrice } from "../../common/utils";
 import * as constants from "./account.constants";
 import Model from "./account.model";
@@ -33,9 +34,8 @@ export default function account(
         exchangeMapping(item, state)
       );
       return state.merge({
+        ...DEFAULT_PRICES,
         accounts,
-        destinationPrice: "",
-        sourcePrice: "",
         sourceAccount: accounts[0],
         destinationAccount: accounts[1],
       });

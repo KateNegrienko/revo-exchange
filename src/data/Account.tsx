@@ -1,6 +1,6 @@
 import { CURRENCIES } from "../common/constants";
 
-export interface Account {
+export interface IBankAccount {
   id: CURRENCIES;
   value: number;
 }

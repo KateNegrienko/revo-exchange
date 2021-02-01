@@ -1,8 +1,8 @@
 import * as constants from "./account.constants";
 import { store } from "../../store";
 import { ExchangeAccountType } from "../../pages/exchange/components/exchange-account/ExchangeAccount.interface";
-import { Rate } from "../../data/Rate";
-import { Account } from "../../data/Account";
+import { IRate } from "../../data/Rate";
+import { IBankAccount } from "../../data/Account";
 
 export const exchangeMoney = () =>
   store.dispatch({
@@ -10,7 +10,7 @@ export const exchangeMoney = () =>
   });
 
 export const setNewPrice = (
-  rates: Rate[],
+  rates: IRate[],
   type: ExchangeAccountType,
   price: number
 ) => {
@@ -24,8 +24,8 @@ export const setNewPrice = (
   });
 };
 
-export const setNewAccount = (type: string, account: Account) =>
+export const setNewAccount = (type: string, payload: IBankAccount) =>
   store.dispatch({
     type,
-    payload: account,
+    payload,
   });

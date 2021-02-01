@@ -1,6 +1,6 @@
 import { CURRENCIES } from "../common/constants";
 
-export interface Rate {
+export interface IRate {
   id: CURRENCIES;
   price: number;
 }

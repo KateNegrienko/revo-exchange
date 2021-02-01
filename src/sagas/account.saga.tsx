@@ -1,10 +1,8 @@
-import { put, takeEvery, select } from "redux-saga/effects";
+import { takeEvery, select } from "redux-saga/effects";
 import { ExchangeAccountType } from "../pages/exchange/components/exchange-account/ExchangeAccount.interface";
+import { IState } from "../reducers";
 import { setNewPrice } from "../reducers/account/account.actions";
-
 import * as constants from "../reducers/account/account.constants";
-import { accountState } from "../reducers/account/account.types";
-import { currencyState } from "../reducers/currency/currency.types";
 
 export function* watcherDataSaga() {
   yield takeEvery(constants.SET_SOURCE_ACCOUNT, setSourceAccountSaga);
@@ -12,10 +10,7 @@ export function* watcherDataSaga() {
 }
 
 export function* setSourceAccountSaga() {
-  const {
-    account,
-    currency,
-  }: { account: accountState; currency: currencyState } = yield select();
+  const { account, currency }: IState = yield select();
 
   yield setNewPrice(
     currency.rates,
@@ -24,10 +19,7 @@ export function* setSourceAccountSaga() {
   );
 }
 export function* setDestinationAccountSaga() {
-  const {
-    account,
-    currency,
-  }: { account: accountState; currency: currencyState } = yield select();
+  const { account, currency }: IState = yield select();
 
   yield setNewPrice(
     currency.rates,

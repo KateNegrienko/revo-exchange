@@ -1,12 +1,13 @@
-import { Account } from "../data/Account";
-import { Rate } from "../data/Rate";
+import { IBankAccount } from "../data/Account";
+import { IRate } from "../data/Rate";
 import { ExchangeAccountType } from "../pages/exchange/components/exchange-account/ExchangeAccount.interface";
 import { DataState } from "../reducers/account/account.types";
+import { DEFAULT_PRICES } from "./constants";
 
 export const exchangeMapping = (
-  { id, value }: Account,
+  { id, value }: IBankAccount,
   state: DataState
-): Account => {
+): IBankAccount => {
   switch (id) {
     case state.sourceAccount.id:
       return {
@@ -16,7 +17,7 @@ export const exchangeMapping = (
 
     case state.destinationAccount.id:
       return {
-        id: id,
+        id,
         value: value + Number(state.destinationPrice),
       };
 
@@ -25,37 +26,55 @@ export const exchangeMapping = (
   }
 };
 
+export const findRate = (rates: IRate[], rateId: string) => {
+  return rates.find(({ id }: IRate) => id === rateId)?.price;
+};
+
+export const getPriceWithSourceType = (
+  price: number,
+  sourceRate: number,
+  destinationRate: number
+) => {
+  const destination =
+    Math.ceil(((price * sourceRate) / destinationRate) * 100) / 100;
+  return {
+    destinationPrice: destination.toString(),
+    sourcePrice: price.toString(),
+  };
+};
+
+export const getPriceWithDestinationType = (
+  price: number,
+  sourceRate: number,
+  destinationRate: number
+) => {
+  const source =
+    Math.ceil(((price * destinationRate) / sourceRate) * 100) / 100;
+
+  return {
+    destinationPrice: price.toString(),
+    sourcePrice: source.toString(),
+  };
+};
+
 export const setNewPrice = (
-  rates: Rate[],
+  rates: IRate[],
   type: ExchangeAccountType,
   price: number,
-  sourceAccount: Account,
-  destinationAccount: Account
-): { destinationPrice: string; sourcePrice: string } => {
-  const sourceRate = rates.find(({ id }: Rate) => id === sourceAccount.id)
-    ?.price;
-  const destinationRate = rates.find(
-    ({ id }: Rate) => id === destinationAccount.id
-  )?.price;
-  if (sourceRate && destinationRate) {
+  sourceAccount: IBankAccount,
+  destinationAccount: IBankAccount
+) => {
+  const sourceRate = findRate(rates, sourceAccount.id);
+  const destinationRate = findRate(rates, destinationAccount.id);
+
+  if (sourceRate && destinationRate && price > 0) {
     switch (type) {
       case ExchangeAccountType.SOURCE:
-        const destination = (price * sourceRate) / destinationRate;
-        return {
-          destinationPrice: parseFloat(destination.toString()).toFixed(2),
-          sourcePrice: price.toString(),
-        };
+        return getPriceWithSourceType(price, sourceRate, destinationRate);
 
       case ExchangeAccountType.DESTINATION:
-        const source = (price * destinationRate) / sourceRate;
-        return {
-          destinationPrice: price.toString(),
-          sourcePrice: parseFloat(source.toString()).toFixed(2),
-        };
+        return getPriceWithDestinationType(price, sourceRate, destinationRate);
     }
   }
-  return {
-    destinationPrice: "",
-    sourcePrice: "",
-  };
+  return DEFAULT_PRICES;
 };

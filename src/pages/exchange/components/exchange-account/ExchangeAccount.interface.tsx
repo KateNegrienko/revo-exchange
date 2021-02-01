@@ -1,6 +1,6 @@
 import { CURRENCIES } from "../../../../common/constants";
-import { Account } from "../../../../data/Account";
-import { Rate } from "../../../../data/Rate";
+import { IBankAccount } from "../../../../data/Account";
+import { IRate } from "../../../../data/Rate";
 
 export enum ExchangeAccountType {
   SOURCE = "source",
@@ -8,8 +8,8 @@ export enum ExchangeAccountType {
 }
 
 export interface IExchangeAccountProps {
-  account: Account;
-  rates: Rate[];
+  account: IBankAccount;
+  rates: IRate[];
   price?: number | string;
   type: ExchangeAccountType;
   onChangePrice: (type: ExchangeAccountType, price: number | string) => void;

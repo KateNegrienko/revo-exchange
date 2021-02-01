@@ -15,6 +15,7 @@ import {
 } from "../../reducers/account/account.actions";
 import { ROOT } from "../../router/Root.constants";
 import theme from "./Exchange.module.scss";
+import { IState } from "../../reducers";
 
 const Exchange: FC = () => {
   const history = useHistory();
@@ -25,10 +26,10 @@ const Exchange: FC = () => {
     sourceAccount,
     destinationPrice,
     destinationAccount,
-  }: accountState = useSelector((state: any) => state.account, shallowEqual);
+  }: accountState = useSelector((state: IState) => state.account, shallowEqual);
 
   const { rates }: currencyState = useSelector(
-    (state: any) => state.currency,
+    (state: IState) => state.currency,
     shallowEqual
   );
 

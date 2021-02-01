@@ -1,10 +1,10 @@
 import { Immutable } from "seamless-immutable";
-import { Account } from "../../data/Account";
+import { IBankAccount } from "../../data/Account";
 
 export interface accountState {
-  accounts: Account[]; // list of accounts
-  sourceAccount: Account;
-  destinationAccount: Account;
+  accounts: IBankAccount[]; // list of accounts
+  sourceAccount: IBankAccount;
+  destinationAccount: IBankAccount;
   sourcePrice: string;
   destinationPrice: string;
 }
