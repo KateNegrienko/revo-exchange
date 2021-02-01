@@ -10,8 +10,8 @@ export enum ExchangeAccountType {
 export interface IExchangeAccountProps {
   account: IBankAccount;
   rates: IRate[];
-  price?: number | string;
+  price?: string;
   type: ExchangeAccountType;
-  onChangePrice: (type: ExchangeAccountType, price: number | string) => void;
+  onChangePrice: (type: ExchangeAccountType, price: string) => void;
   onChangeAccount: (type: ExchangeAccountType, accountId: CURRENCIES) => void;
 }

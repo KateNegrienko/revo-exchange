@@ -57,7 +57,7 @@ const Exchange: FC = () => {
   }, [rates]);
 
   const handleChangePrice = useCallback(
-    (type: ExchangeAccountType, price: number | string) => {
+    (type: ExchangeAccountType, price: string) => {
       setType(type);
       setNewPrice(rates, type, Number(price));
     },

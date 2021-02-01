@@ -32,12 +32,9 @@ const ExchangeAccount: FC<IExchangeAccountProps> = ({
   const handleChange = useCallback(
     (e) => {
       e.persist();
-      if (e.target.value) {
-        const float = parseFloat(e.target.value);
-        handleChangeValidation(e.target.value);
-
-        onChangePrice(type, Number(float.toFixed(2)));
-      }
+      const float = parseFloat(e.target.value);
+      handleChangeValidation(e.target.value);
+      onChangePrice(type, float.toFixed(2));
     },
     [onChangePrice, handleChangeValidation, type]
   );
