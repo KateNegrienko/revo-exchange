@@ -5,24 +5,26 @@ import { DataState } from "../reducers/account/account.types";
 import { DEFAULT_PRICES } from "./constants";
 
 export const exchangeMapping = (
-  { id, value }: IBankAccount,
+  { id, value, symbol }: IBankAccount,
   state: DataState
 ): IBankAccount => {
   switch (id) {
     case state.sourceAccount.id:
       return {
         id,
+        symbol,
         value: value - Number(state.sourcePrice),
       };
 
     case state.destinationAccount.id:
       return {
         id,
+        symbol,
         value: value + Number(state.destinationPrice),
       };
 
     default:
-      return { id, value };
+      return { id, value, symbol };
   }
 };
 

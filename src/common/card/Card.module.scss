@@ -1,8 +1,11 @@
+@import "../scss/constants.scss";
+
 .card {
-  background-color: #fff;
-  color: #000;
-  border-radius: 8px;
-  padding: 40px;
-  margin-top: 40px;
-  margin-bottom: 40px;
+  background-color: $white;
+  color: $black;
+  border-radius: $border-radius;
+  padding: $space-l;
+  margin-top: $space-m;
+  margin-bottom: $space-m;
+  box-shadow: $elevation-1;
 }

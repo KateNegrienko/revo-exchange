@@ -1,0 +1,18 @@
+@import "../../../../common/scss/constants.scss";
+
+.root {
+  border-radius: $border-radius;
+  margin: $space-m;
+
+  .currency {
+    color: $grey;
+    margin-bottom: $space-s;
+    margin-top: 0;
+    font-weight: 500;
+  }
+
+  .balance {
+    margin: 0;
+    font-size: 36px;
+  }
+}
