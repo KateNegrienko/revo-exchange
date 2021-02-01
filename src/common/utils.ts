@@ -7,30 +7,28 @@ import { DataState } from "../reducers/account/account.types";
 import { DEFAULT_PRICES } from "./constants";
 
 export const round = (value: number) => {
-  return Math.ceil(value * 100) / 100;
+  return Math.floor(value * 100) / 100;
 };
 
 export const exchangeMapping = (
-  { id, value, symbol }: IBankAccount,
+  item: IBankAccount,
   state: DataState
 ): IBankAccount => {
-  switch (id) {
+  switch (item.id) {
     case state.sourceAccount.id:
       return {
-        id,
-        symbol,
-        value: round(value - Number(state.sourcePrice)),
+        ...item,
+        value: round(item.value - Number(state.sourcePrice)),
       };
 
     case state.destinationAccount.id:
       return {
-        id,
-        symbol,
-        value: round(value + Number(state.destinationPrice)),
+        ...item,
+        value: round(item.value + Number(state.destinationPrice)),
       };
 
     default:
-      return { id, value, symbol };
+      return item;
   }
 };
 

@@ -30,12 +30,12 @@ export const utilsPriceTestData = [
       destinationRate: 0.82,
     },
     expectedDataForSource: {
-      destinationPrice: "11.24",
+      destinationPrice: "11.23",
       sourcePrice: "10",
     },
     expectedDataForDestination: {
       destinationPrice: "10",
-      sourcePrice: "8.91",
+      sourcePrice: "8.9",
     },
   },
   {
@@ -45,12 +45,12 @@ export const utilsPriceTestData = [
       destinationRate: 0.73,
     },
     expectedDataForSource: {
-      destinationPrice: "3.57",
+      destinationPrice: "3.56",
       sourcePrice: "4",
     },
     expectedDataForDestination: {
       destinationPrice: "4",
-      sourcePrice: "4.5",
+      sourcePrice: "4.49",
     },
   },
 ];
@@ -64,12 +64,12 @@ export const utilsSetPriceTestData = [
       destinationAccount: INITIAL_ACCOUNTS[1],
     },
     expectedDataForSource: {
-      destinationPrice: "8.91",
+      destinationPrice: "8.9",
       sourcePrice: "10",
     },
     expectedDataForDestination: {
       destinationPrice: "10",
-      sourcePrice: "11.24",
+      sourcePrice: "11.23",
     },
   },
   {
@@ -85,7 +85,7 @@ export const utilsSetPriceTestData = [
     },
     expectedDataForDestination: {
       destinationPrice: "4",
-      sourcePrice: "4.88",
+      sourcePrice: "4.87",
     },
   },
 ];
