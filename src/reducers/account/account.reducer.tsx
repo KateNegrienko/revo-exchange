@@ -20,13 +20,13 @@ export default function account(
 
     case constants.SET_NEW_PRICE:
       return state.merge(
-        setNewPrice(
-          payload.rates,
-          payload.type,
-          payload.price,
-          state.sourceAccount,
-          state.destinationAccount
-        )
+        setNewPrice({
+          rates: payload.rates,
+          type: payload.type,
+          price: payload.price,
+          sourceAccount: state.sourceAccount,
+          destinationAccount: state.destinationAccount,
+        })
       );
 
     case constants.EXCHANGE_MONEY:

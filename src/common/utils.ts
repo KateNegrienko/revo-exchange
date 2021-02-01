@@ -1,4 +1,6 @@
 import { IBankAccount } from "../data/Account";
+import { IExchangeSource } from "../data/ExchangeSource";
+import { INewPriceProps } from "../data/NewPriceProps";
 import { IRate } from "../data/Rate";
 import { ExchangeAccountType } from "../pages/exchange/components/exchange-account/ExchangeAccount.interface";
 import { DataState } from "../reducers/account/account.types";
@@ -32,11 +34,11 @@ export const findRate = (rates: IRate[], rateId: string) => {
   return rates.find(({ key }: IRate) => key === rateId)?.price;
 };
 
-export const getPriceWithSourceType = (
-  price: number,
-  sourceRate: number,
-  destinationRate: number
-) => {
+export const getPriceWithSourceType = ({
+  price,
+  sourceRate,
+  destinationRate,
+}: IExchangeSource) => {
   const destination =
     Math.ceil(((price * sourceRate) / destinationRate) * 100) / 100;
   return {
@@ -45,11 +47,11 @@ export const getPriceWithSourceType = (
   };
 };
 
-export const getPriceWithDestinationType = (
-  price: number,
-  sourceRate: number,
-  destinationRate: number
-) => {
+export const getPriceWithDestinationType = ({
+  price,
+  sourceRate,
+  destinationRate,
+}: IExchangeSource) => {
   const source =
     Math.ceil(((price * destinationRate) / sourceRate) * 100) / 100;
 
@@ -59,23 +61,27 @@ export const getPriceWithDestinationType = (
   };
 };
 
-export const setNewPrice = (
-  rates: IRate[],
-  type: ExchangeAccountType,
-  price: number,
-  sourceAccount: IBankAccount,
-  destinationAccount: IBankAccount
-) => {
+export const setNewPrice = ({
+  rates,
+  type,
+  price,
+  sourceAccount,
+  destinationAccount,
+}: INewPriceProps) => {
   const sourceRate = findRate(rates, sourceAccount.id);
   const destinationRate = findRate(rates, destinationAccount.id);
 
   if (sourceRate && destinationRate && price > 0) {
     switch (type) {
       case ExchangeAccountType.SOURCE:
-        return getPriceWithSourceType(price, sourceRate, destinationRate);
+        return getPriceWithSourceType({ price, sourceRate, destinationRate });
 
       case ExchangeAccountType.DESTINATION:
-        return getPriceWithDestinationType(price, sourceRate, destinationRate);
+        return getPriceWithDestinationType({
+          price,
+          sourceRate,
+          destinationRate,
+        });
     }
   }
   return DEFAULT_PRICES;

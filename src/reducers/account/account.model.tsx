@@ -1,24 +1,5 @@
 import Immutable from "seamless-immutable";
-import { CURRENCIES, DEFAULT_PRICES } from "../../common/constants";
-import { IBankAccount } from "../../data/Account";
-
-export const INITIAL_ACCOUNTS: IBankAccount[] = [
-  {
-    id: CURRENCIES.EUR,
-    value: 50.3,
-    symbol: "€",
-  },
-  {
-    id: CURRENCIES.GBP,
-    value: 100,
-    symbol: "£",
-  },
-  {
-    id: CURRENCIES.USD,
-    value: 50,
-    symbol: "$",
-  },
-];
+import { DEFAULT_PRICES, INITIAL_ACCOUNTS } from "../../common/constants";
 
 export default Immutable({
   ...DEFAULT_PRICES,

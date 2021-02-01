@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useCallback } from "react";
 import cn from "classnames";
 import { IButtonProps } from "./Button.interface";
 import theme from "./Button.module.scss";
@@ -8,14 +8,21 @@ const Button: FC<IButtonProps> = ({
   className,
   children,
   disabled = false,
-}) => (
-  <button
-    className={cn(theme.button, disabled && theme.disabled, className)}
-    onClick={onClick}
-    disabled={disabled}
-  >
-    {children}
-  </button>
-);
+}) => {
+  const handleClick = useCallback(() => {
+    if (!disabled) {
+      onClick();
+    }
+  }, [disabled, onClick]);
+  return (
+    <button
+      className={cn(theme.button, disabled && theme.disabled, className)}
+      onClick={handleClick}
+      disabled={disabled}
+    >
+      {children}
+    </button>
+  );
+};
 
 export default Button;
