@@ -20,13 +20,14 @@ const ExchangeAccount: FC<IExchangeAccountProps> = ({
 
   useEffect(() => {
     if (Number(price) > account.value && type === ExchangeAccountType.SOURCE) {
-      setInputError(
+      return setInputError(
         "You cannot change more money than there is in your account"
       );
-    } else {
+    }
+    if (inputError !== "") {
       setInputError("");
     }
-  }, [price, account.value, type]);
+  }, [price, account.value, type, inputError]);
 
   const handleChange = useCallback(
     (e) => {
