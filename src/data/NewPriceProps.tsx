@@ -4,7 +4,7 @@ import { IRate } from "./Rate";
 
 export interface INewPriceProps {
   rates: IRate[];
-  type: ExchangeAccountType;
+  focusInput: ExchangeAccountType;
   price: number;
   sourceAccount: IBankAccount;
   destinationAccount: IBankAccount;

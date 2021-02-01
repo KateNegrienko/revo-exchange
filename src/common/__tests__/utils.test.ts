@@ -28,7 +28,7 @@ describe("[Utils tests]", () => {
       const { expectedDataForSource, newPriceProps } = element;
       const price = setNewPrice({
         ...newPriceProps,
-        type: ExchangeAccountType.SOURCE,
+        focusInput: ExchangeAccountType.SOURCE,
       });
       expect(price).toEqual(expectedDataForSource);
     });
@@ -39,7 +39,7 @@ describe("[Utils tests]", () => {
       const { expectedDataForDestination, newPriceProps } = element;
       const price = setNewPrice({
         ...newPriceProps,
-        type: ExchangeAccountType.DESTINATION,
+        focusInput: ExchangeAccountType.DESTINATION,
       });
       expect(price).toEqual(expectedDataForDestination);
     });
@@ -47,7 +47,7 @@ describe("[Utils tests]", () => {
 
   it("Should return empty exchanged prices if rates not found", () => {
     const price = setNewPrice({
-      type: ExchangeAccountType.SOURCE,
+      focusInput: ExchangeAccountType.SOURCE,
       price: 10,
       rates: [],
       sourceAccount: INITIAL_ACCOUNTS[0],

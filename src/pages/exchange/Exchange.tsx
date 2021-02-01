@@ -21,7 +21,7 @@ import Button from "../../common/button/Button";
 
 const Exchange: FC = () => {
   const history = useHistory();
-  const [type, setType] = useState(ExchangeAccountType.SOURCE);
+  const [focusInput, setFocusInput] = useState(ExchangeAccountType.SOURCE);
   const {
     accounts,
     sourcePrice,
@@ -48,20 +48,21 @@ const Exchange: FC = () => {
 
   useEffect(() => {
     if (sourcePrice && destinationPrice) {
-      setNewPrice(
+      setNewPrice({
         rates,
-        type,
-        type === ExchangeAccountType.SOURCE
-          ? Number(sourcePrice)
-          : Number(destinationPrice)
-      );
+        focusInput,
+        price:
+          focusInput === ExchangeAccountType.SOURCE
+            ? Number(sourcePrice)
+            : Number(destinationPrice),
+      });
     }
   }, [rates]);
 
   const handleChangePrice = useCallback(
-    (type: ExchangeAccountType, price: string) => {
-      setType(type);
-      setNewPrice(rates, type, Number(price));
+    (focusInput: ExchangeAccountType, price: string) => {
+      setFocusInput(focusInput);
+      setNewPrice({ rates, focusInput, price: Number(price) });
     },
     [rates]
   );
@@ -74,11 +75,12 @@ const Exchange: FC = () => {
           accountType === ExchangeAccountType.SOURCE
             ? constants.SET_SOURCE_ACCOUNT
             : constants.SET_DESTINATION_ACCOUNT,
-          newAccount
+          newAccount,
+          focusInput
         );
       }
     },
-    [accounts]
+    [accounts, focusInput]
   );
 
   const handleExchange = useCallback(() => {

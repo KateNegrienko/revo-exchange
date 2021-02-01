@@ -3,7 +3,7 @@ import { IBankAccount } from "../data/Account";
 export enum CURRENCIES {
   USD = "USD",
   EUR = "EUR",
-  GBP = "GBR",
+  GBP = "GBP",
 }
 
 export const DEFAULT_PRICES = {

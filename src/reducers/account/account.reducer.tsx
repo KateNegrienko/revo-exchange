@@ -11,19 +11,17 @@ export default function account(
   switch (type) {
     case constants.SET_DESTINATION_ACCOUNT:
       return state.merge({
-        destinationAccount: payload,
+        destinationAccount: payload.account,
       });
     case constants.SET_SOURCE_ACCOUNT:
       return state.merge({
-        sourceAccount: payload,
+        sourceAccount: payload.account,
       });
 
     case constants.SET_NEW_PRICE:
       return state.merge(
         setNewPrice({
-          rates: payload.rates,
-          type: payload.type,
-          price: payload.price,
+          ...payload,
           sourceAccount: state.sourceAccount,
           destinationAccount: state.destinationAccount,
         })

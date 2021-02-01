@@ -12,13 +12,13 @@ export const TEST_RATES: IRate[] = [
     key: CURRENCIES.EUR,
     value: CURRENCIES.EUR,
     text: CURRENCIES.EUR,
-    price: 2,
+    price: 0.82,
   },
   {
     key: CURRENCIES.GBP,
     value: CURRENCIES.GBP,
     text: CURRENCIES.GBP,
-    price: 3,
+    price: 0.73,
   },
 ];
 
@@ -26,31 +26,31 @@ export const utilsPriceTestData = [
   {
     sourceData: {
       price: 10,
-      sourceRate: 2,
-      destinationRate: 3,
+      sourceRate: 0.73,
+      destinationRate: 0.82,
     },
     expectedDataForSource: {
-      destinationPrice: "6.67",
+      destinationPrice: "11.24",
       sourcePrice: "10",
     },
     expectedDataForDestination: {
       destinationPrice: "10",
-      sourcePrice: "15",
+      sourcePrice: "8.91",
     },
   },
   {
     sourceData: {
       price: 4,
-      sourceRate: 1,
-      destinationRate: 3,
+      sourceRate: 0.82,
+      destinationRate: 0.73,
     },
     expectedDataForSource: {
-      destinationPrice: "1.34",
+      destinationPrice: "3.57",
       sourcePrice: "4",
     },
     expectedDataForDestination: {
       destinationPrice: "4",
-      sourcePrice: "12",
+      sourcePrice: "4.5",
     },
   },
 ];
@@ -64,12 +64,12 @@ export const utilsSetPriceTestData = [
       destinationAccount: INITIAL_ACCOUNTS[1],
     },
     expectedDataForSource: {
-      destinationPrice: "6.67",
+      destinationPrice: "8.91",
       sourcePrice: "10",
     },
     expectedDataForDestination: {
       destinationPrice: "10",
-      sourcePrice: "15",
+      sourcePrice: "11.24",
     },
   },
   {
@@ -80,12 +80,12 @@ export const utilsSetPriceTestData = [
       destinationAccount: INITIAL_ACCOUNTS[0],
     },
     expectedDataForSource: {
-      destinationPrice: "2",
+      destinationPrice: "3.28",
       sourcePrice: "4",
     },
     expectedDataForDestination: {
       destinationPrice: "4",
-      sourcePrice: "8",
+      sourcePrice: "4.88",
     },
   },
 ];

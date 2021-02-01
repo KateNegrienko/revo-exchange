@@ -6,6 +6,10 @@ import { ExchangeAccountType } from "../pages/exchange/components/exchange-accou
 import { DataState } from "../reducers/account/account.types";
 import { DEFAULT_PRICES } from "./constants";
 
+export const round = (value: number) => {
+  return Math.ceil(value * 100) / 100;
+};
+
 export const exchangeMapping = (
   { id, value, symbol }: IBankAccount,
   state: DataState
@@ -15,14 +19,14 @@ export const exchangeMapping = (
       return {
         id,
         symbol,
-        value: value - Number(state.sourcePrice),
+        value: round(value - Number(state.sourcePrice)),
       };
 
     case state.destinationAccount.id:
       return {
         id,
         symbol,
-        value: value + Number(state.destinationPrice),
+        value: round(value + Number(state.destinationPrice)),
       };
 
     default:
@@ -39,8 +43,7 @@ export const getPriceWithSourceType = ({
   sourceRate,
   destinationRate,
 }: IExchangeSource) => {
-  const destination =
-    Math.ceil(((price * sourceRate) / destinationRate) * 100) / 100;
+  const destination = round((price / sourceRate) * destinationRate);
   return {
     destinationPrice: destination.toString(),
     sourcePrice: price.toString(),
@@ -52,8 +55,7 @@ export const getPriceWithDestinationType = ({
   sourceRate,
   destinationRate,
 }: IExchangeSource) => {
-  const source =
-    Math.ceil(((price * destinationRate) / sourceRate) * 100) / 100;
+  const source = round((price / destinationRate) * sourceRate);
 
   return {
     destinationPrice: price.toString(),
@@ -63,7 +65,7 @@ export const getPriceWithDestinationType = ({
 
 export const setNewPrice = ({
   rates,
-  type,
+  focusInput,
   price,
   sourceAccount,
   destinationAccount,
@@ -72,7 +74,7 @@ export const setNewPrice = ({
   const destinationRate = findRate(rates, destinationAccount.id);
 
   if (sourceRate && destinationRate && price > 0) {
-    switch (type) {
+    switch (focusInput) {
       case ExchangeAccountType.SOURCE:
         return getPriceWithSourceType({ price, sourceRate, destinationRate });
 

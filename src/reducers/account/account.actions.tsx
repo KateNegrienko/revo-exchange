@@ -9,23 +9,26 @@ export const exchangeMoney = () =>
     type: constants.EXCHANGE_MONEY,
   });
 
-export const setNewPrice = (
-  rates: IRate[],
-  type: ExchangeAccountType,
-  price: number
-) => {
+export const setNewPrice = (payload: {
+  rates: IRate[];
+  focusInput: ExchangeAccountType;
+  price: number;
+}) => {
   store.dispatch({
     type: constants.SET_NEW_PRICE,
-    payload: {
-      type,
-      rates,
-      price,
-    },
+    payload,
   });
 };
 
-export const setNewAccount = (type: string, payload: IBankAccount) =>
+export const setNewAccount = (
+  type: string,
+  account: IBankAccount,
+  focusInput: ExchangeAccountType
+) =>
   store.dispatch({
     type,
-    payload,
+    payload: {
+      account,
+      focusInput,
+    },
   });

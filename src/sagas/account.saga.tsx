@@ -5,25 +5,20 @@ import { setNewPrice } from "../reducers/account/account.actions";
 import * as constants from "../reducers/account/account.constants";
 
 export function* watcherDataSaga() {
-  yield takeEvery(constants.SET_SOURCE_ACCOUNT, setSourceAccountSaga);
-  yield takeEvery(constants.SET_DESTINATION_ACCOUNT, setDestinationAccountSaga);
+  yield takeEvery(constants.SET_SOURCE_ACCOUNT, setAccountSaga);
+  yield takeEvery(constants.SET_DESTINATION_ACCOUNT, setAccountSaga);
 }
 
-export function* setSourceAccountSaga() {
+export function* setAccountSaga({ payload }: any) {
   const { account, currency }: IState = yield select();
 
-  yield setNewPrice(
-    currency.rates,
-    ExchangeAccountType.SOURCE,
-    Number(account.sourcePrice)
-  );
-}
-export function* setDestinationAccountSaga() {
-  const { account, currency }: IState = yield select();
-
-  yield setNewPrice(
-    currency.rates,
-    ExchangeAccountType.DESTINATION,
-    Number(account.destinationPrice)
-  );
+  yield setNewPrice({
+    rates: currency.rates,
+    focusInput: payload.focusInput,
+    price: Number(
+      payload.focusInput === ExchangeAccountType.SOURCE
+        ? account.sourcePrice
+        : account.destinationPrice
+    ),
+  });
 }
