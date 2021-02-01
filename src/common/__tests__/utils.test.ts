@@ -1,9 +1,9 @@
 import { ExchangeAccountType } from "../../pages/exchange/components/exchange-account/ExchangeAccount.interface";
 import { DEFAULT_PRICES, INITIAL_ACCOUNTS } from "../constants";
 import {
+  calculatePrice,
   getPriceWithDestinationType,
   getPriceWithSourceType,
-  setNewPrice,
 } from "../utils";
 import { utilsPriceTestData, utilsSetPriceTestData } from "../utils.data";
 
@@ -11,14 +11,14 @@ describe("[Utils tests]", () => {
   it("Should return correct echanged prices for SourceType", () => {
     utilsPriceTestData.forEach((element) => {
       const { sourceData, expectedDataForSource } = element;
-      const newPrice = getPriceWithSourceType({ ...sourceData });
+      const newPrice = getPriceWithSourceType(sourceData);
       expect(newPrice).toEqual(expectedDataForSource);
     });
   });
   it("Should return correct exchanged prices for DisitnationType", () => {
     utilsPriceTestData.forEach((element) => {
       const { sourceData, expectedDataForDestination } = element;
-      const newPrice = getPriceWithDestinationType({ ...sourceData });
+      const newPrice = getPriceWithDestinationType(sourceData);
       expect(newPrice).toEqual(expectedDataForDestination);
     });
   });
@@ -26,7 +26,7 @@ describe("[Utils tests]", () => {
   it("Should return correct exchanged prices after change Source input if rates found", () => {
     utilsSetPriceTestData.forEach((element) => {
       const { expectedDataForSource, newPriceProps } = element;
-      const price = setNewPrice({
+      const price = calculatePrice({
         ...newPriceProps,
         focusInput: ExchangeAccountType.SOURCE,
       });
@@ -37,7 +37,7 @@ describe("[Utils tests]", () => {
   it("Should return correct exchanged prices after change Disitination input if rates found", () => {
     utilsSetPriceTestData.forEach((element) => {
       const { expectedDataForDestination, newPriceProps } = element;
-      const price = setNewPrice({
+      const price = calculatePrice({
         ...newPriceProps,
         focusInput: ExchangeAccountType.DESTINATION,
       });
@@ -46,7 +46,7 @@ describe("[Utils tests]", () => {
   });
 
   it("Should return empty exchanged prices if rates not found", () => {
-    const price = setNewPrice({
+    const price = calculatePrice({
       focusInput: ExchangeAccountType.SOURCE,
       price: 10,
       rates: [],
@@ -57,7 +57,7 @@ describe("[Utils tests]", () => {
   });
 
   it("Should return empty exchanged prices if price = 0", () => {
-    const price = setNewPrice({
+    const price = calculatePrice({
       focusInput: ExchangeAccountType.SOURCE,
       price: 0,
       rates: [],

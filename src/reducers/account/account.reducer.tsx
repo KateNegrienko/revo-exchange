@@ -1,5 +1,5 @@
 import { DEFAULT_PRICES } from "../../common/constants";
-import { exchangeMapping, setNewPrice } from "../../common/utils";
+import { calculatePrice, exchangeMapping } from "../../common/utils";
 import * as constants from "./account.constants";
 import Model from "./account.model";
 import { DataState, Actions } from "./account.types";
@@ -20,7 +20,7 @@ export default function account(
 
     case constants.SET_NEW_PRICE:
       return state.merge(
-        setNewPrice({
+        calculatePrice({
           ...payload,
           sourceAccount: state.sourceAccount,
           destinationAccount: state.destinationAccount,

@@ -61,7 +61,7 @@ export const getPriceWithDestinationType = ({
   };
 };
 
-export const setNewPrice = ({
+export const calculatePrice = ({
   rates,
   focusInput,
   price,
