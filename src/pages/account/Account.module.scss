@@ -1,14 +1,13 @@
 @import "../../common/scss/constants.scss";
+@import "../../common/scss/mixins.scss";
 
 .root {
+  padding: $space-m;
   .card {
     max-width: 400px;
-    margin: $space-xxl auto;
-    background-color: $ligth-neutral;
+    @include card-layout();
   }
   .header {
-    color: $primary;
-    margin: 0 $space-m $space-l $space-m;
-    font-weight: 500;
+    @include header();
   }
 }

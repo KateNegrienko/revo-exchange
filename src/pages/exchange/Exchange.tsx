@@ -16,6 +16,7 @@ import {
 import { ROOT } from "../../router/Root.constants";
 import theme from "./Exchange.module.scss";
 import { IState } from "../../reducers";
+import Card from "../../common/card/Card";
 
 const Exchange: FC = () => {
   const history = useHistory();
@@ -86,33 +87,35 @@ const Exchange: FC = () => {
 
   return (
     <div className={theme.root}>
-      Exchange
-      {sourceAccount && (
-        <ExchangeAccount
-          rates={rates}
-          price={sourcePrice}
-          account={sourceAccount}
-          type={ExchangeAccountType.SOURCE}
-          onChangePrice={handleChangePrice}
-          onChangeAccount={handleChangeAccount}
-        />
-      )}
-      {destinationAccount && (
-        <ExchangeAccount
-          rates={rates}
-          price={destinationPrice}
-          account={destinationAccount}
-          type={ExchangeAccountType.DESTINATION}
-          onChangePrice={handleChangePrice}
-          onChangeAccount={handleChangeAccount}
-        />
-      )}
-      <button
-        onClick={handleExchange}
-        disabled={sourceAccount.id === destinationAccount.id}
-      >
-        Exchange
-      </button>
+      <Card className={theme.card}>
+        <h1 className={theme.header}>Exchange</h1>
+        {sourceAccount && (
+          <ExchangeAccount
+            rates={rates}
+            price={sourcePrice}
+            account={sourceAccount}
+            type={ExchangeAccountType.SOURCE}
+            onChangePrice={handleChangePrice}
+            onChangeAccount={handleChangeAccount}
+          />
+        )}
+        {destinationAccount && (
+          <ExchangeAccount
+            rates={rates}
+            price={destinationPrice}
+            account={destinationAccount}
+            type={ExchangeAccountType.DESTINATION}
+            onChangePrice={handleChangePrice}
+            onChangeAccount={handleChangeAccount}
+          />
+        )}
+        <button
+          onClick={handleExchange}
+          disabled={sourceAccount.id === destinationAccount.id}
+        >
+          Exchange
+        </button>
+      </Card>
     </div>
   );
 };

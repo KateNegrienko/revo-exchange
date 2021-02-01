@@ -1,0 +1,14 @@
+@mixin header() {
+  color: $primary;
+  margin: 0 $space-m $space-l $space-m;
+  font-weight: 500;
+}
+
+@mixin card-layout() {
+  max-width: 400px;
+  margin: $space-xxl auto;
+  background-color: $ligth-neutral;
+  @media (max-width: 440px) {
+    margin: 0 auto;
+  }
+}

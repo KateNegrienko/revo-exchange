@@ -1,2 +1,12 @@
+@import "../../common/scss/mixins.scss";
+@import "../../common/scss/constants.scss";
+
 .root {
+  padding: $space-m;
+  .card {
+    @include card-layout();
+  }
+  .header {
+    @include header();
+  }
 }
