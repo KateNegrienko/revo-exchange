@@ -1,29 +1,31 @@
 @import "../../../../common/scss/constants.scss";
-.input {
-  position: relative;
-  display: inline-block;
-
-  input {
-    padding-left: 20px;
-  }
-
-  &::after {
-    width: 1em;
-    height: 1em;
-    position: absolute;
-    top: 2px;
-    left: 5px;
-    transform: translateY(-50%);
-  }
-}
-.source::after {
-  content: "-";
-}
-
-.destination::after {
-  content: "+";
-}
 
 .root {
   margin: $space-m 0;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+.input {
+  flex-grow: 1;
+  min-width: 100px !important;
+  max-width: 100%;
+}
+.select {
+  max-width: 100px;
+  min-width: initial !important;
+  margin-right: $space-m;
+}
+.hint {
+  font-size: 10px;
+  font-weight: 300;
+  color: $grey;
+}
+.error {
+  color: $error;
+  font-size: 10px;
+  font-weight: 300;
+  margin-bottom: $space-m;
 }

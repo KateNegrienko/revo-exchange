@@ -1,5 +1,6 @@
 import { FC, useCallback, useState } from "react";
-import cn from "classnames";
+import { Input, Icon, Select } from "semantic-ui-react";
+
 import Card from "../../../../common/card/Card";
 import {
   ExchangeAccountType,
@@ -22,9 +23,10 @@ const ExchangeAccount: FC<IExchangeAccountProps> = ({
         setInputError(
           "you cannot change more money than there is in your account"
         );
-      } else {
-        setInputError("");
+        return false;
       }
+      setInputError("");
+      return true;
     },
     [account.value]
   );
@@ -39,47 +41,43 @@ const ExchangeAccount: FC<IExchangeAccountProps> = ({
     [onChangePrice, handleChangeValidation, type]
   );
   const handleChangeAccount = useCallback(
-    (e) => {
-      onChangeAccount(type, e.target.value);
+    (e, data) => {
+      onChangeAccount(type, data.value);
     },
     [onChangeAccount, type]
   );
   return (
     <Card className={theme.root}>
-      <div>
-        <select
-          size={1}
+      <div className={theme.error}>{inputError}</div>
+      <div className={theme.row}>
+        <Select
           name={account.id}
-          value={account.id}
+          className={theme.select}
+          size="small"
           onChange={handleChangeAccount}
+          value={account.id}
+          options={rates}
+        />
+
+        <Input
+          iconPosition="left"
+          type="number"
+          size="small"
+          className={theme.input}
         >
-          {rates.map((rate) => {
-            return (
-              <option key={rate.id} value={rate.id}>
-                {rate.id}
-              </option>
-            );
-          })}
-        </select>
-        You have {account.value}
+          <Icon name={type === ExchangeAccountType.SOURCE ? "minus" : "plus"} />
+          <input
+            type="number"
+            value={price}
+            step=".01"
+            pattern="^\d*(\.\d{0,2})?$"
+            max={account.value}
+            onChange={handleChange}
+          ></input>
+        </Input>
       </div>
 
-      <div
-        className={cn(
-          theme.input,
-          type === ExchangeAccountType.SOURCE ? theme.source : theme.destination
-        )}
-      >
-        <input
-          type="number"
-          value={price}
-          step=".01"
-          pattern="^\d*(\.\d{0,2})?$"
-          max={account.value}
-          onChange={handleChange}
-        ></input>
-      </div>
-      {inputError}
+      <div className={theme.hint}> Balance: {account.value}</div>
     </Card>
   );
 };

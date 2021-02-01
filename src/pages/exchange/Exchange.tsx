@@ -112,7 +112,10 @@ const Exchange: FC = () => {
         )}
         <Button
           onClick={handleExchange}
-          disabled={sourceAccount.id === destinationAccount.id}
+          disabled={
+            sourceAccount.id === destinationAccount.id ||
+            Number(sourcePrice) > sourceAccount.value
+          }
         >
           Exchange
         </Button>

@@ -29,7 +29,7 @@ export const exchangeMapping = (
 };
 
 export const findRate = (rates: IRate[], rateId: string) => {
-  return rates.find(({ id }: IRate) => id === rateId)?.price;
+  return rates.find(({ key }: IRate) => key === rateId)?.price;
 };
 
 export const getPriceWithSourceType = (

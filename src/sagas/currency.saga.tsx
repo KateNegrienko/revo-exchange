@@ -11,15 +11,21 @@ export function* readExchangeSaga() {
   try {
     const rates: IRate[] = [
       {
-        id: CURRENCIES.USD,
+        key: CURRENCIES.USD,
+        value: CURRENCIES.USD,
+        text: CURRENCIES.USD,
         price: 1,
       },
       {
-        id: CURRENCIES.EUR,
+        key: CURRENCIES.EUR,
+        value: CURRENCIES.EUR,
+        text: CURRENCIES.EUR,
         price: 2, //1 + Math.floor(Math.random() * Math.floor(3)),
       },
       {
-        id: CURRENCIES.GBP,
+        key: CURRENCIES.GBP,
+        value: CURRENCIES.GBP,
+        text: CURRENCIES.GBP,
         price: 3, //1 + Math.floor(Math.random() * Math.floor(3)),
       },
     ];
