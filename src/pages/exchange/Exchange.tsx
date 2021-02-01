@@ -102,6 +102,7 @@ const Exchange: FC = () => {
             onChangeAccount={handleChangeAccount}
           />
         )}
+
         {destinationAccount && (
           <ExchangeAccount
             rates={rates}
