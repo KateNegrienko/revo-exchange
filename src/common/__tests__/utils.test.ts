@@ -55,4 +55,15 @@ describe("[Utils tests]", () => {
     });
     expect(price).toEqual(DEFAULT_PRICES);
   });
+
+  it("Should return empty exchanged prices if price = 0", () => {
+    const price = setNewPrice({
+      focusInput: ExchangeAccountType.SOURCE,
+      price: 0,
+      rates: [],
+      sourceAccount: INITIAL_ACCOUNTS[0],
+      destinationAccount: INITIAL_ACCOUNTS[1],
+    });
+    expect(price).toEqual(DEFAULT_PRICES);
+  });
 });
