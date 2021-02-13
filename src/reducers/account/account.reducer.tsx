@@ -19,13 +19,18 @@ export default function account(
       });
 
     case constants.SET_NEW_PRICE:
-      return state.merge(
-        calculatePrice({
-          ...payload,
-          sourceAccount: state.sourceAccount,
-          destinationAccount: state.destinationAccount,
-        })
-      );
+      const { rates, focusInput, price } = payload;
+      return rates && rates.length && focusInput && price
+        ? state.merge(
+            calculatePrice({
+              rates,
+              focusInput,
+              price,
+              sourceAccount: state.sourceAccount,
+              destinationAccount: state.destinationAccount,
+            })
+          )
+        : state;
 
     case constants.EXCHANGE_MONEY:
       const accounts = state.accounts.map((item) =>
