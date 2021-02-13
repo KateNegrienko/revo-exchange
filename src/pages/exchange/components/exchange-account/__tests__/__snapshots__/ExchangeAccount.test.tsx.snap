@@ -100,4 +100,20 @@ exports[`[Exchange account component] [Exchange account snapshot] Should render 
 </div>
 `;
 
+exports[`[Exchange account component] [balance] Should change balance hint after price pops changed 1`] = `
+<div
+  className="hint"
+>
+   Balance: 
+  50.3
+</div>
+`;
 
+exports[`[Exchange account component] [balance] Should change balance hint after price pops changed 2`] = `
+<div
+  className="hint"
+>
+   Balance: 
+  10
+</div>
+`;

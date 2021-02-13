@@ -20,9 +20,7 @@ const ExchangeAccount: FC<IExchangeAccountProps> = ({
   const [inputError, setInputError] = useState("");
 
   useEffect(() => {
-    const errorMessage = validation(type, account.value, Number(price));
-    console.log(errorMessage);
-    setInputError(errorMessage);
+    setInputError(validation(type, account.value, Number(price)));
   }, [price, account.value, type, inputError]);
 
   const handleChange = useCallback(
