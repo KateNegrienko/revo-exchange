@@ -1,0 +1,93 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`[Exchange component] Should render properly with only required props  1`] = `
+<div
+  className="root"
+>
+  <Card
+    className="card"
+  >
+    <h1
+      className="header"
+    >
+      Exchange
+    </h1>
+    <ExchangeAccount
+      account={
+        Object {
+          "id": "EUR",
+          "symbol": "€",
+          "value": 50.3,
+        }
+      }
+      onChangeAccount={[Function]}
+      onChangePrice={[Function]}
+      price=""
+      rates={
+        Array [
+          Object {
+            "key": "USD",
+            "price": 1,
+            "text": "USD",
+            "value": "USD",
+          },
+          Object {
+            "key": "EUR",
+            "price": 0.82,
+            "text": "EUR",
+            "value": "EUR",
+          },
+          Object {
+            "key": "GBP",
+            "price": 0.73,
+            "text": "GBP",
+            "value": "GBP",
+          },
+        ]
+      }
+      type="source"
+    />
+    <ExchangeAccount
+      account={
+        Object {
+          "id": "GBP",
+          "symbol": "£",
+          "value": 100,
+        }
+      }
+      onChangeAccount={[Function]}
+      onChangePrice={[Function]}
+      price=""
+      rates={
+        Array [
+          Object {
+            "key": "USD",
+            "price": 1,
+            "text": "USD",
+            "value": "USD",
+          },
+          Object {
+            "key": "EUR",
+            "price": 0.82,
+            "text": "EUR",
+            "value": "EUR",
+          },
+          Object {
+            "key": "GBP",
+            "price": 0.73,
+            "text": "GBP",
+            "value": "GBP",
+          },
+        ]
+      }
+      type="destination"
+    />
+    <Button
+      disabled={false}
+      onClick={[Function]}
+    >
+      Exchange
+    </Button>
+  </Card>
+</div>
+`;
