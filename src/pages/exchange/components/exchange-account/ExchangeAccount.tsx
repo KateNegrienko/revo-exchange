@@ -2,6 +2,7 @@ import { FC, useCallback, useEffect, useState } from "react";
 import { Input, Icon, Select } from "semantic-ui-react";
 
 import Card from "../../../../common/card/Card";
+import { validation } from "../../../../common/utils";
 import {
   ExchangeAccountType,
   IExchangeAccountProps,
@@ -19,14 +20,9 @@ const ExchangeAccount: FC<IExchangeAccountProps> = ({
   const [inputError, setInputError] = useState("");
 
   useEffect(() => {
-    if (Number(price) > account.value && type === ExchangeAccountType.SOURCE) {
-      return setInputError(
-        "You cannot change more money than there is in your account"
-      );
-    }
-    if (inputError !== "") {
-      setInputError("");
-    }
+    const errorMessage = validation(type, account.value, Number(price));
+    console.log(errorMessage);
+    setInputError(errorMessage);
   }, [price, account.value, type, inputError]);
 
   const handleChange = useCallback(

@@ -10,6 +10,16 @@ export const round = (value: number) => {
   return Math.floor(value * 100) / 100;
 };
 
+export const validation = (
+  type: ExchangeAccountType,
+  balance: number,
+  money: number
+): string => {
+  return money > balance && type === ExchangeAccountType.SOURCE
+    ? "You cannot change more money than there is in your account"
+    : "";
+};
+
 export const exchangeMapping = (
   item: IBankAccount,
   state: DataState

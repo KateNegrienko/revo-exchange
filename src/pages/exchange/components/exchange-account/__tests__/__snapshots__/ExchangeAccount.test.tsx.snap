@@ -1,0 +1,103 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`[Exchange account component] [Exchange account snapshot] Should render properly with only required props  1`] = `
+<div
+  class="card root"
+>
+  <div
+    class="error"
+  />
+  <div
+    class="row"
+  >
+    <div
+      aria-expanded="false"
+      class="ui selection dropdown select"
+      name="EUR"
+      role="listbox"
+      tabindex="0"
+    >
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        class="divider text"
+        role="alert"
+      >
+        EUR
+      </div>
+      <i
+        aria-hidden="true"
+        class="dropdown icon"
+      />
+      <div
+        class="menu transition"
+      >
+        <div
+          aria-checked="false"
+          aria-selected="false"
+          class="item"
+          price="1"
+          role="option"
+          style="pointer-events:all"
+        >
+          <span
+            class="text"
+          >
+            USD
+          </span>
+        </div>
+        <div
+          aria-checked="true"
+          aria-selected="true"
+          class="active selected item"
+          price="0.82"
+          role="option"
+          style="pointer-events:all"
+        >
+          <span
+            class="text"
+          >
+            EUR
+          </span>
+        </div>
+        <div
+          aria-checked="false"
+          aria-selected="false"
+          class="item"
+          price="0.73"
+          role="option"
+          style="pointer-events:all"
+        >
+          <span
+            class="text"
+          >
+            GBP
+          </span>
+        </div>
+      </div>
+    </div>
+    <div
+      class="ui small left icon input input"
+    >
+      <i
+        aria-hidden="true"
+        class="minus icon"
+      />
+      <input
+        max="50.3"
+        pattern="^\\\\d*(\\\\.\\\\d{0,2})?$"
+        step=".01"
+        type="number"
+        value=""
+      />
+    </div>
+  </div>
+  <div
+    class="hint"
+  >
+     Balance: 50.3
+  </div>
+</div>
+`;
+
+
